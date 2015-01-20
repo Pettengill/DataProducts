@@ -1,0 +1,48 @@
+Bacterial Growth Curves of 3 Strains in 3 Environments
+========================================================
+author: Pettengill
+date: 1/15/15
+
+Why this data? Why use rChart? 
+========================================================
+Why this data?
+This is a good example of a large set of actual data on growth curves.
+
+Why rChart?
+It was more intuitive than googleVis or NVD3 and I still wanted interactive capabilities. 
+
+Pros/Cons of rChart
+- Con: For this many data, rChart is slow but googleVis is probably slower.
+- Pro: rCharts is easy to learn, intuitive syntax compared to googleVis. 
+- Con: Not as easy to create faceted/panel graphs as ggplot2 
+- Pro: More flexible than googleVis
+
+Growth rate
+========================================================
+The growth rates for these strains is likely more complex than a simple linear model. 
+For simplicity, I picked the data from between 5 to 10 hours of growth to calculate a simple linear model for the growth rate. 
+Below is an example of code used in server.R:
+```{r}
+        library(fda)
+        data(growth)
+        growth <- as.data.frame(growth)
+        fit <- lm(log(growth[,"hgtm.boy02"]) ~ growth[,"age"]) 
+        paste("Growth rate of 1 boy (in cm):", signif(log(2)/fit$coef[2], digits = 3))  
+```
+How to use the app
+========================================================
+
+To get a better idea of how the 3 strains grow within and across environments, you can change drop-down menus for the following:
+
+- Growth Environment
+- Strain within that environment for calculating growth curve
+
+Be patient, there are a lot of data to load. 
+
+More Info
+========================================================
+The shiny app is hosted at (it loads slowly): https://pettengill.shinyapps.io/DataProd/
+
+This shiny app was designed as a project for the Developing Data Products Coursera course. 
+
+It uses data and some pre-processing code from Brain Connelly's blog, http://bconnelly.net/2014/04/analyzing-microbial-growth-with-r/
